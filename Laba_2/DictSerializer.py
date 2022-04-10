@@ -35,7 +35,6 @@ class DictSerializer:
                 body["value"].append(dict_value)
         elif obj_type == tuple:
             body["type"] = "tuple"
-            # body["value"] = tuple([DictSerializer.serialize(value) for value in obj])
             body["value"] = []
             for value in obj:
                 dict_value = DictSerializer.serialize(value)
