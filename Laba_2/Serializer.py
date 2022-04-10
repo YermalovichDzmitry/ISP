@@ -302,44 +302,44 @@ class Serializer:
                         obj = deserialized_class()
         return obj
 
-        @staticmethod
-        def tuple_to_str(tuple_object):
-            if type(tuple_object) == tuple:
-                array_item = []
-                for i in tuple_object:
-                    array_item.append(f"{tuple_to_str(i)}")
-                tuple_str = ", ".join(array_item)
-                return f"[{tuple_str}]"
-            else:
-                return f"\"{str(tuple_object)}\""
+    @staticmethod
+    def tuple_to_str(tuple_object):
+        if type(tuple_object) == tuple:
+            array_item = []
+            for i in tuple_object:
+                array_item.append(f"{Serializer.tuple_to_str(i)}")
+            tuple_str = ", ".join(array_item)
+            return f"[{tuple_str}]"
+        else:
+            return f"\"{str(tuple_object)}\""
 
-        @staticmethod
-        def str_to_tuple(str_obj):
-            if str_obj == '[]':
-                return tuple()
-            elif str_obj[0] == '[':
-                str_obj = str_obj[1:len(str_obj) - 1]
-                tuple_data = []
-                deep = 0
-                comma = False
-                substr = ""
-                for i in str_obj:
-                    if i == '[':
-                        deep += 1
-                    elif i == ']':
-                        deep -= 1
-                    elif i == '\"':
-                        comma = not comma
-                    elif i == ',' and not comma and deep == 0:
-                        tuple_data.append(str_to_tuple(substr))
-                        substr = ""
-                        continue
-                    elif i == ' ' and not comma:
-                        continue
+    @staticmethod
+    def str_to_tuple(str_obj):
+        if str_obj == '[]':
+            return tuple()
+        elif str_obj[0] == '[':
+            str_obj = str_obj[1:len(str_obj) - 1]
+            tuple_data = []
+            deep = 0
+            comma = False
+            substr = ""
+            for i in str_obj:
+                if i == '[':
+                    deep += 1
+                elif i == ']':
+                    deep -= 1
+                elif i == '\"':
+                    comma = not comma
+                elif i == ',' and not comma and deep == 0:
+                    tuple_data.append(Serializer.str_to_tuple(substr))
+                    substr = ""
+                    continue
+                elif i == ' ' and not comma:
+                    continue
 
-                    substr += i
+                substr += i
 
-                tuple_data.append(str_to_tuple(substr))
-                return tuple(tuple_data)
-            else:
-                return str_obj[1:len(str_obj) - 1]
+            tuple_data.append(Serializer.str_to_tuple(substr))
+            return tuple(tuple_data)
+        else:
+            return str_obj[1:len(str_obj) - 1]
