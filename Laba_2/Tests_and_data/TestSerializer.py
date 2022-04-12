@@ -1,7 +1,6 @@
 import unittest
 from TestData import value_int, value_str, simple_dict, list_with_many_types, foo, Car
 from Serializer import Serializer
-from DictSerializer import DictSerializer
 
 
 def serialize_and_deserialize_obj(obj):
@@ -12,7 +11,7 @@ def serialize_and_deserialize_obj(obj):
 
 class TestSerializer(unittest.TestCase):
     def test_base_type(self):
-        base_objs = [value_int, value_str, simple_dict]
+        base_objs = [value_int, value_str, simple_dict, list_with_many_types]
         for obj in base_objs:
             des_obj = serialize_and_deserialize_obj(obj)
             self.assertEqual(des_obj, obj)
