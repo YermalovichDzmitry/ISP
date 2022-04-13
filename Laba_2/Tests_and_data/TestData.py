@@ -1,7 +1,6 @@
 value_int = 33
 value_str = "Vasya"
 simple_dict = {"Name": "Dima", "age": [1, 5], "eye color": "Green"}
-list_with_many_types = [False, 6, 3, [4, 1], 12.34, 76, (1, 2, 3), simple_dict, True, complex(3, 4), {1, 5, 3, 1}, None]
 
 
 def foo(arr, rev=False):

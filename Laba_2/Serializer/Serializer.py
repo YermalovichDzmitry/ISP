@@ -1,5 +1,5 @@
 import regex as re
-from Arguments import func_arguments, code_arguments, instance_call_members, method_not_call_members
+from Arguments.Arguments import func_arguments, code_arguments, instance_call_members, method_not_call_members
 import inspect
 import types
 
@@ -12,30 +12,39 @@ class Serializer:
         if obj_type == int:
             body["type"] = "int"
             body["value"] = obj
+
         elif obj_type == str:
             body["type"] = "str"
             body["value"] = obj
+
         elif obj_type == float:
             body["type"] = "float"
             body["value"] = obj
+
         elif obj_type == bool:
             body["type"] = "bool"
             body["value"] = obj
+
         elif obj_type == complex:
             body["type"] = "complex"
             body["value"] = obj
+
         elif obj_type == bytes:
             body["type"] = "bytes"
             body["value"] = tuple([Serializer.serialize(i) for i in obj])
+
         elif obj_type == list:
             body["type"] = "list"
             body["value"] = tuple([Serializer.serialize(i) for i in obj])
+
         elif obj_type == tuple:
             body["type"] = "tuple"
             body["value"] = tuple([Serializer.serialize(value) for value in obj])
+
         elif obj_type == set:
             body["type"] = "set"
             body["value"] = tuple([Serializer.serialize(value) for value in obj])
+
         elif obj_type == dict:
             body["type"] = "dict"
             body["value"] = {}
@@ -44,9 +53,11 @@ class Serializer:
                 dict_value = Serializer.serialize(value)
                 body["value"].update({dict_key: dict_value})
             body["value"] = tuple((key, body["value"][key]) for key in body["value"])
+
         elif isinstance(obj, type(None)):
             body["type"] = "NoneType"
             body["value"] = None
+
         elif inspect.isfunction(obj):
             body["type"] = "function"
             body["value"] = {}
@@ -97,6 +108,7 @@ class Serializer:
             class_body_extend_serialized = Serializer.serialize(class_body_extend)
             body["value"].update({Serializer.serialize("class_body"): class_body_extend_serialized})
             body["value"] = tuple((k, body["value"][k]) for k in body["value"])
+
         elif inspect.ismethod(obj):
             body["type"] = "function"
             body["value"] = {}
@@ -123,6 +135,7 @@ class Serializer:
                 (key, body["value"][Serializer.serialize("__code__")][key]) for key in
                 body["value"][Serializer.serialize("__code__")])
             body["value"] = tuple((key, body["value"][key]) for key in body["value"])
+
         else:
             body["type"] = "instance"
             body["value"] = {}
@@ -202,32 +215,43 @@ class Serializer:
         obj = None
         if object_type == "int":
             obj = int(body["value"])
+
         elif object_type == "str":
             obj = str(body["value"])
+
         elif object_type == "float":
             obj = float(body["value"])
+
         elif object_type == "complex":
             obj = complex(body["value"])
+
         elif object_type == "bytes":
             obj = bytes([Serializer.deserialize(i) for i in body["value"]])
+
         elif object_type == "bool":
             obj = body["value"] == "True"
+
         elif object_type == "list":
             obj = []
             for value in body["value"]:
                 deserialized_object = Serializer.deserialize(value)
                 obj.append(deserialized_object)
+
         elif object_type == "tuple":
             obj = tuple([Serializer.deserialize(value) for value in body["value"]])
+
         elif object_type == "set":
             obj = set([Serializer.deserialize(value) for value in body["value"]])
+
         elif object_type == "dict":
             obj = {}
             for item in body["value"]:
                 val = Serializer.deserialize(item[1])
                 obj[Serializer.deserialize(item[0])] = val
+
         elif object_type == "NoneType":
             obj = None
+
         elif object_type == "function":
             code = [0] * 16
             func = [0] * 4
@@ -251,6 +275,7 @@ class Serializer:
             func.insert(1, globals_deserialized)
             func = types.FunctionType(*func)
             obj = func
+
         elif object_type == "class":
             for item in body["value"]:
 
@@ -263,6 +288,7 @@ class Serializer:
                     class_body = Serializer.deserialize(item[1])
 
             obj = types.new_class(name, bases=bases, kwds=None, exec_body=lambda ns: ns.update(class_body))
+
         elif object_type == "instance":
             for item in body["value"]:
 

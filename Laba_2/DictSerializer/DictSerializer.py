@@ -1,5 +1,5 @@
 import regex as re
-from Arguments import func_arguments, code_arguments, instance_call_members, method_not_call_members
+from Arguments.Arguments import func_arguments, code_arguments, instance_call_members, method_not_call_members
 import inspect
 import types
 
@@ -12,45 +12,56 @@ class DictSerializer:
         if obj_type == int:
             body["type"] = "int"
             body["value"] = obj
+
         elif obj_type == str:
             body["type"] = "str"
             body["value"] = obj
+
         elif obj_type == float:
             body["type"] = "float"
             body["value"] = obj
+
         elif obj_type == bool:
             body["type"] = "bool"
             body["value"] = str(obj)
+
         elif obj_type == complex:
             body["type"] = "complex"
             body["value"] = str(obj)
+
         elif obj_type == bytes:
             body["type"] = "bytes"
             body["value"] = [DictSerializer.serialize(i) for i in obj]
+
         elif obj_type == list:
             body["type"] = "list"
             body["value"] = []
             for value in obj:
                 dict_value = DictSerializer.serialize(value)
                 body["value"].append(dict_value)
+
         elif obj_type == tuple:
             body["type"] = "tuple"
             body["value"] = []
             for value in obj:
                 dict_value = DictSerializer.serialize(value)
                 body["value"].append(dict_value)
+
         elif obj_type == set:
             body["type"] = "set"
             body["value"] = [DictSerializer.serialize(value) for value in obj]
+
         elif obj_type == dict:
             body["type"] = "dict"
             body["value"] = {}
             for key, value in obj.items():
                 dict_value = DictSerializer.serialize(value)
                 body["value"].update({key: dict_value})
+
         elif isinstance(obj, type(None)):
             body["type"] = "NoneType"
             body["value"] = "None"
+
         elif inspect.isfunction(obj):
             body["type"] = "function"
             body["value"] = {}
@@ -74,6 +85,7 @@ class DictSerializer:
                     globs_vals.update({func_glob_arg: globs[func_glob_arg]})
             globs_vals_serialized = DictSerializer.serialize(globs_vals)
             body["value"].update({"__globals__": globs_vals_serialized})
+
         elif inspect.isclass(obj):
             body["type"] = "class"
             body["value"] = {}
@@ -94,6 +106,7 @@ class DictSerializer:
             class_body_extend.pop("__weakref__")
             class_body_extend_serialized = DictSerializer.serialize(class_body_extend)
             body["value"].update({"class_body": class_body_extend_serialized})
+
         elif inspect.ismethod(obj):
             body["type"] = "function"
             body["value"] = {}
@@ -178,32 +191,43 @@ class DictSerializer:
         obj = None
         if object_type == "int":
             obj = int(body["value"])
+
         elif object_type == "str":
             obj = str(body["value"])
+
         elif object_type == "float":
             obj = float(body["value"])
+
         elif object_type == "complex":
             obj = complex(body["value"])
+
         elif object_type == "bytes":
             obj = bytes([DictSerializer.deserialize(i) for i in body["value"]])
+
         elif object_type == "bool":
             obj = body["value"] == "True"
+
         elif object_type == "list":
             obj = []
             for value in body["value"]:
                 deserialized_object = DictSerializer.deserialize(value)
                 obj.append(deserialized_object)
+
         elif object_type == "tuple":
             obj = tuple([DictSerializer.deserialize(value) for value in body["value"]])
+
         elif object_type == "set":
             obj = set([DictSerializer.deserialize(value) for value in body["value"]])
+
         elif object_type == "dict":
             obj = {}
             for key, value in body["value"].items():
                 deserialized_object = DictSerializer.deserialize(value)
                 obj.update({key: deserialized_object})
+
         elif object_type == "NoneType":
             obj = None
+
         elif object_type == "function":
             code = [0] * 16
             func = [0] * 4
@@ -222,11 +246,13 @@ class DictSerializer:
             func.insert(1, globals_deserialized)
             func = types.FunctionType(*func)
             obj = func
+
         elif object_type == "class":
             name = DictSerializer.deserialize(body["value"]["name"])
             bases = DictSerializer.deserialize(body["value"]["bases"])
             class_body = DictSerializer.deserialize(body["value"]["class_body"])
             obj = types.new_class(name, bases=bases, kwds=None, exec_body=lambda ns: ns.update(class_body))
+
         elif object_type == "instance":
             name = DictSerializer.deserialize(body["value"]["name"])
             bases = DictSerializer.deserialize(body["value"]["bases"])
