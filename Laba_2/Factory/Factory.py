@@ -6,11 +6,11 @@ from TomlSerializer.TomlSerializer import TomlSerializer
 class Factory:
     @staticmethod
     def setSerializer(serializer_name):
-        if serializer_name == "json":
-            return JsonSerializer
-
         if serializer_name == "yaml":
             return YamlSerializer
 
-        if serializer_name == "yaml":
+        elif serializer_name == "toml":
             return TomlSerializer
+
+        elif serializer_name == "json":
+            return JsonSerializer
