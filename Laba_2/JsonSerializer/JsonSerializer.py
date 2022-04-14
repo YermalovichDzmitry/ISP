@@ -1,4 +1,4 @@
-from Serializer import Serializer
+from Serializer.Serializer import Serializer
 from DictSerializer.DictSerializer import DictSerializer
 import regex as re
 

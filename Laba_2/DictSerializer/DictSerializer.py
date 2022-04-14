@@ -80,9 +80,14 @@ class DictSerializer:
             globs_vals = {}
             globs = obj.__getattribute__("__globals__")
             func_glob_args = obj.__code__.co_names
+            modules_names = []
             for func_glob_arg in func_glob_args:
                 if func_glob_arg in globs:
-                    globs_vals.update({func_glob_arg: globs[func_glob_arg]})
+                    if isinstance(globs[func_glob_arg], types.ModuleType):
+                        modules_names.append(func_glob_arg)
+                    else:
+                        globs_vals.update({func_glob_arg: globs[func_glob_arg]})
+            globs_vals.update({"__modules": modules_names})
             globs_vals_serialized = DictSerializer.serialize(globs_vals)
             body["value"].update({"__globals__": globs_vals_serialized})
 
@@ -242,6 +247,10 @@ class DictSerializer:
                     func[func_arguments.index(key)] = deserialized_object
 
             globals_deserialized = DictSerializer.deserialize(body["value"]["__globals__"])
+            if globals_deserialized["__modules"]:
+                for item in globals_deserialized["__modules"]:
+                    globals_deserialized.update({item: __import__(item)})
+
             globals_deserialized.update({"__builtins__": __builtins__})
             func.insert(1, globals_deserialized)
             func = types.FunctionType(*func)
