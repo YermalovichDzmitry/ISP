@@ -1,3 +1,5 @@
+import math
+
 value_int = 33
 value_str = "Vasya"
 simple_dict = {"Name": "Dima", "age": [1, 5], "eye color": "Green"}
@@ -33,3 +35,10 @@ class Car:
 
     def get_car_color(self):
         return self.color
+
+
+c = 42
+
+
+def f(x, y):
+    return math.sin(x * y * c)

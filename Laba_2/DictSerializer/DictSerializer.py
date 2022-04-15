@@ -247,7 +247,7 @@ class DictSerializer:
                     func[func_arguments.index(key)] = deserialized_object
 
             globals_deserialized = DictSerializer.deserialize(body["value"]["__globals__"])
-            if globals_deserialized["__modules"]:
+            if globals_deserialized.get("__modules"):
                 for item in globals_deserialized["__modules"]:
                     globals_deserialized.update({item: __import__(item)})
 

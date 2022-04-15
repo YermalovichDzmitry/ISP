@@ -1,5 +1,5 @@
 import unittest
-from Tests_and_data.TestData import value_int, value_str, simple_dict, foo, Car
+from TestData import value_int, value_str, simple_dict, foo, Car, f
 from Serializer.Serializer import Serializer
 
 
@@ -38,3 +38,7 @@ class TestSerializer(unittest.TestCase):
         self.assertEqual(audi_origin.speed, audi_des.speed)
         self.assertEqual(audi_origin.get_car_color(), audi_des.get_car_color())
         self.assertEqual(audi_origin.calc_time(250), audi_des.calc_time(250))
+
+    def test_butoma(self):
+        func = serialize_and_deserialize_obj(f)
+        self.assertEqual(func(1, 2), f(1, 2))

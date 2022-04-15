@@ -269,7 +269,7 @@ class Serializer:
                         code_dict.update({Serializer.deserialize(x[0]): Serializer.deserialize(x[1])})
                 elif key == "__globals__":
                     globals_deserialized = Serializer.deserialize(item[1])
-                    if globals_deserialized["__modules"]:
+                    if globals_deserialized.get("__modules"):
                         for item in globals_deserialized["__modules"]:
                             globals_deserialized.update({item: __import__(item)})
 
