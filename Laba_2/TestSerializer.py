@@ -1,6 +1,8 @@
 import unittest
 from TestData import value_int, value_str, simple_dict, foo, Car, f, set_obj
 from Serializer.Serializer import Serializer
+from JsonSerializer.JsonSerializer import JsonSerializer
+import json
 
 
 def serialize_and_deserialize_obj(obj):
@@ -43,6 +45,30 @@ class TestSerializer(unittest.TestCase):
         func = serialize_and_deserialize_obj(f)
         self.assertEqual(func(1, 2), f(1, 2))
 
+    def test_json_serializer(self):
+        base_objs = [value_int, value_str, simple_dict, set_obj]
+        for obj in base_objs:
+            dict_obj, str_json = JsonSerializer.dumps(obj)
+            self.assertEqual(str_json, json.dumps(dict_obj))
+            JsonSerializer.loads(dict_obj)
+
+        dict_obj, str_json = JsonSerializer.dumps(foo)
+        self.assertEqual(str_json, json.dumps(dict_obj))
+        JsonSerializer.loads(dict_obj)
+
+        dict_obj, str_json = JsonSerializer.dumps(Car)
+        self.assertEqual(str_json, json.dumps(dict_obj))
+        JsonSerializer.loads(dict_obj)
+
+        dict_obj, str_json = JsonSerializer.dumps(f)
+        self.assertEqual(str_json, json.dumps(dict_obj))
+        JsonSerializer.loads(dict_obj)
+
+        audi_origin = Car(120, "audi", 1500)
+        dict_obj, str_json = JsonSerializer.dumps(audi_origin)
+        self.assertEqual(str_json, json.dumps(dict_obj))
+        JsonSerializer.loads(dict_obj)
+
 
 test_obj = TestSerializer()
 test_obj.test_base_type()
@@ -50,3 +76,4 @@ test_obj.test_butoma()
 test_obj.test_class()
 test_obj.test_instance()
 test_obj.test_function()
+test_obj.test_json_serializer()
