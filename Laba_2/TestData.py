@@ -1,8 +1,10 @@
 import math
+import complex
 
 value_int = 33
 value_str = "Vasya"
 simple_dict = {"Name": "Dima", "age": [1, 5], "eye color": "Green"}
+set_obj = {4, 5, 8, 6, 2.12, 3j + 5, 5, None}
 
 
 def foo(arr, rev=False):

@@ -1,5 +1,5 @@
 import unittest
-from TestData import value_int, value_str, simple_dict, foo, Car, f
+from TestData import value_int, value_str, simple_dict, foo, Car, f, set_obj
 from Serializer.Serializer import Serializer
 
 
@@ -11,7 +11,7 @@ def serialize_and_deserialize_obj(obj):
 
 class TestSerializer(unittest.TestCase):
     def test_base_type(self):
-        base_objs = [value_int, value_str, simple_dict]
+        base_objs = [value_int, value_str, simple_dict, set_obj]
         for obj in base_objs:
             des_obj = serialize_and_deserialize_obj(obj)
             self.assertEqual(des_obj, obj)
@@ -42,3 +42,11 @@ class TestSerializer(unittest.TestCase):
     def test_butoma(self):
         func = serialize_and_deserialize_obj(f)
         self.assertEqual(func(1, 2), f(1, 2))
+
+
+test_obj = TestSerializer()
+test_obj.test_base_type()
+test_obj.test_butoma()
+test_obj.test_class()
+test_obj.test_instance()
+test_obj.test_function()
