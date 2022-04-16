@@ -1,4 +1,4 @@
-from JsonSerializer import JsonSerializer
+from JsonSerializer.JsonSerializer import JsonSerializer
 from YamlSerializer.YamlSerializer import YamlSerializer
 from TomlSerializer.TomlSerializer import TomlSerializer
 
