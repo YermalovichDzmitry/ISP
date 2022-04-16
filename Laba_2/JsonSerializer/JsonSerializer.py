@@ -1,6 +1,7 @@
 from Serializer.Serializer import Serializer
 from DictSerializer.DictSerializer import DictSerializer
 import regex as re
+from Arguments.Arguments import file_arg
 
 
 class JsonSerializer:
@@ -15,7 +16,7 @@ class JsonSerializer:
             str_sir_json = re.sub(r"'", "\"", str_sir_json)
             f.write(str_sir_json)
 
-        tuple_filename = filename + "_tuple.txt"
+        tuple_filename = filename + file_arg
         with open(tuple_filename, "w") as f:
             f.write(str_tuple)
 
@@ -32,7 +33,7 @@ class JsonSerializer:
 
     @staticmethod
     def load(filename):
-        tuple_filename = filename + "_tuple.txt"
+        tuple_filename = filename + file_arg
         with open(tuple_filename, "r") as f:
             str_obj = f.read()
 

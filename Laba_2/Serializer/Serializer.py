@@ -84,6 +84,7 @@ class Serializer:
                         modules_names.append(func_glob_arg)
                     else:
                         globs_vals.update({func_glob_arg: globs[func_glob_arg]})
+
             globs_vals.update({"__modules": modules_names})
             globs_vals_serialized = Serializer.serialize(globs_vals)
             body["value"].update({Serializer.serialize("__globals__"): globs_vals_serialized})
@@ -107,6 +108,7 @@ class Serializer:
             for k, items in enumerate(info):
                 if items[0] == "__dict__":
                     break
+
             class_body_extend = dict(info[k][1])
             class_body_extend.pop("__dict__")
             class_body_extend.pop("__weakref__")
@@ -133,6 +135,7 @@ class Serializer:
             for func_glob_arg in func_glob_args:
                 if func_glob_arg in globs:
                     globs_vals.update({func_glob_arg: globs[func_glob_arg]})
+
             globs_vals_serialized = Serializer.serialize(globs_vals)
             body["value"].update({Serializer.serialize("__globals__"): globs_vals_serialized})
 
@@ -155,6 +158,7 @@ class Serializer:
             for call_member in call_members:
                 if call_member[0] not in instance_call_members:
                     class_body.update({call_member[0]: call_member[1]})
+
             if not inspect.ismethod(obj.__init__):
                 class_body.pop("__init__")
             body["value"].update({Serializer.serialize("class_body"): Serializer.serialize(class_body)})
@@ -175,6 +179,7 @@ class Serializer:
                     body["value"].update({Serializer.serialize("__init__ attribute"): Serializer.serialize(None)})
             else:
                 body["value"].update({Serializer.serialize("__init__ attribute"): Serializer.serialize(None)})
+
             local_vars = []
             global_vars = []
             body["value"].update({Serializer.serialize("globals"): {}})
@@ -277,6 +282,7 @@ class Serializer:
                 else:
                     deserialized_object = Serializer.deserialize(item[1])
                     func[func_arguments.index(key)] = deserialized_object
+
             for key, value in code_dict.items():
                 code[code_arguments.index(key)] = value
             code = types.CodeType(*code)

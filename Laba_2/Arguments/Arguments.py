@@ -11,3 +11,5 @@ instance_call_members = ["__subclasshook__", "__str__", "__sizeof__", "__setattr
                          "__eq__", "__dir__", "__delattr__", "__class__"]
 
 method_not_call_members = ["__dict__", "__doc__", "__module__", "__weakref__"]
+
+file_arg = "_tuple.txt"

@@ -1,5 +1,5 @@
 import unittest
-from TestData import value_int, value_str, simple_dict, foo, Car, f, set_obj
+from TestData.TestData import value_int, value_str, simple_dict, foo, Car, f, set_obj
 from Serializer.Serializer import Serializer
 from JsonSerializer.JsonSerializer import JsonSerializer
 import json

@@ -87,6 +87,7 @@ class DictSerializer:
                         modules_names.append(func_glob_arg)
                     else:
                         globs_vals.update({func_glob_arg: globs[func_glob_arg]})
+
             globs_vals.update({"__modules": modules_names})
             globs_vals_serialized = DictSerializer.serialize(globs_vals)
             body["value"].update({"__globals__": globs_vals_serialized})
@@ -106,6 +107,7 @@ class DictSerializer:
             for k, items in enumerate(info):
                 if items[0] == "__dict__":
                     break
+
             class_body_extend = dict(info[k][1])
             class_body_extend.pop("__dict__")
             class_body_extend.pop("__weakref__")
@@ -130,6 +132,7 @@ class DictSerializer:
             for func_glob_arg in func_glob_args:
                 if func_glob_arg in globs:
                     globs_vals.update({func_glob_arg: globs[func_glob_arg]})
+
             globs_vals_serialized = DictSerializer.serialize(globs_vals)
             body["value"].update({"__globals__": globs_vals_serialized})
 
@@ -147,6 +150,7 @@ class DictSerializer:
             for call_member in call_members:
                 if call_member[0] not in instance_call_members:
                     class_body.update({call_member[0]: call_member[1]})
+
             if not inspect.ismethod(obj.__init__):
                 class_body.pop("__init__")
             body["value"].update({"class_body": DictSerializer.serialize(class_body)})
@@ -166,6 +170,7 @@ class DictSerializer:
                     body["value"].update({"__init__ attribute": DictSerializer.serialize(None)})
             else:
                 body["value"].update({"__init__ attribute": DictSerializer.serialize(None)})
+
             local_vars = []
             global_vars = []
             body["value"].update({"globals": {}})
@@ -271,14 +276,17 @@ class DictSerializer:
                 if method_not_call_member != "__dict__":
                     class_body.update({method_not_call_member: DictSerializer.deserialize(
                         body["value"]["globals"][method_not_call_member])})
+
             if body["value"]["globals"]["global_vars"]:
                 for key, value in body["value"]["globals"]["global_vars"].items():
                     class_body.update({key: DictSerializer.deserialize(value)})
+
             if body["value"]["globals"]["local_vars"]:
                 for key, value in body["value"]["globals"]["local_vars"].items():
                     class_body.update({key: DictSerializer.deserialize(value)})
             deserialized_class = types.new_class(name, bases=bases, kwds=None,
                                                  exec_body=lambda ns: ns.update(class_body))
+
             init_attrs = DictSerializer.deserialize(body["value"]["__init__ attribute"])
             if init_attrs:
                 attrs = []
