@@ -4,7 +4,7 @@ from FormatOperation.ChangeFormat import change_format
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--filename', type=str, default="None")
-parser.add_argument('--format', type=str, default="None")
+parser.add_argument('--format', type=str, choices=["yaml", "toml", "json"])
 args = parser.parse_args()
 
 filename = args.filename
