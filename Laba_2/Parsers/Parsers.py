@@ -122,4 +122,3 @@ def toml_parser_1(object, filename, prev=None, key_obj=None):
             toml_parser_1(item, filename, prev="list", key_obj=key_obj)
             with open(filename, "a") as f:
                 f.write(f"\n")
-
