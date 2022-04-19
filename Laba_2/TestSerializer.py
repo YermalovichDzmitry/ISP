@@ -71,7 +71,6 @@ class TestSerializer(unittest.TestCase):
         JsonSerializer.loads(json_obj)
 
 
-
 test_obj = TestSerializer()
 test_obj.test_base_type()
 test_obj.test_butoma()
