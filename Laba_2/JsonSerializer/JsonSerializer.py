@@ -22,10 +22,7 @@ class JsonSerializer:
 
     @staticmethod
     def dumps(obj):
-        obj_dict_ser = DictSerializer.serialize(obj)
-        str_sir_json = str(obj_dict_ser)
-        str_sir_json = re.sub(r"'", "\"", str_sir_json)
-        return obj_dict_ser, str_sir_json
+        return DictSerializer.serialize(obj)
 
     @staticmethod
     def loads(obj):

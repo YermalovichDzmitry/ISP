@@ -3,6 +3,7 @@ from TestData.TestData import value_int, value_str, simple_dict, foo, Car, f, se
 from Serializer.Serializer import Serializer
 from JsonSerializer.JsonSerializer import JsonSerializer
 import json
+import re
 
 
 def serialize_and_deserialize_obj(obj):
@@ -48,26 +49,26 @@ class TestSerializer(unittest.TestCase):
     def test_json_serializer(self):
         base_objs = [value_int, value_str, simple_dict, set_obj]
         for obj in base_objs:
-            dict_obj, str_json = JsonSerializer.dumps(obj)
-            self.assertEqual(str_json, json.dumps(dict_obj))
-            JsonSerializer.loads(dict_obj)
+            json_obj = JsonSerializer.dumps(obj)
+            self.assertEqual(re.sub(r"'", "\"", str(json_obj)), json.dumps(json_obj))
+            JsonSerializer.loads(json_obj)
 
-        dict_obj, str_json = JsonSerializer.dumps(foo)
-        self.assertEqual(str_json, json.dumps(dict_obj))
-        JsonSerializer.loads(dict_obj)
+        json_obj = JsonSerializer.dumps(foo)
+        self.assertEqual(re.sub(r"'", "\"", str(json_obj)), json.dumps(json_obj))
+        JsonSerializer.loads(json_obj)
 
-        dict_obj, str_json = JsonSerializer.dumps(Car)
-        self.assertEqual(str_json, json.dumps(dict_obj))
-        JsonSerializer.loads(dict_obj)
+        json_obj = JsonSerializer.dumps(Car)
+        self.assertEqual(re.sub(r"'", "\"", str(json_obj)), json.dumps(json_obj))
+        JsonSerializer.loads(json_obj)
 
-        dict_obj, str_json = JsonSerializer.dumps(f)
-        self.assertEqual(str_json, json.dumps(dict_obj))
-        JsonSerializer.loads(dict_obj)
+        json_obj = JsonSerializer.dumps(f)
+        self.assertEqual(re.sub(r"'", "\"", str(json_obj)), json.dumps(json_obj))
+        JsonSerializer.loads(json_obj)
 
         audi_origin = Car(120, "audi", 1500)
-        dict_obj, str_json = JsonSerializer.dumps(audi_origin)
-        self.assertEqual(str_json, json.dumps(dict_obj))
-        JsonSerializer.loads(dict_obj)
+        json_obj = JsonSerializer.dumps(audi_origin)
+        self.assertEqual(re.sub(r"'", "\"", str(json_obj)), json.dumps(json_obj))
+        JsonSerializer.loads(json_obj)
 
 
 test_obj = TestSerializer()
