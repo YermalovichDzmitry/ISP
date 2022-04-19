@@ -14,3 +14,4 @@ num = 999
 g = 1000
 
 JsonSerializer.dump(foo, "data.txt")
+
