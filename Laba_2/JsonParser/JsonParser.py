@@ -86,9 +86,6 @@ def dict_parser(str_obj):
                 dict_key += i
         sub_dict = sub_dict[len(dict_key) + 3:]
 
-        # if dict_key == "__code__":
-        #     print(sub_dict)
-
         deep = 0
         sub_str = ""
         n = 0
@@ -121,17 +118,13 @@ def dict_parser(str_obj):
 
             if sub_dict[0] != "\"":
                 sub_dict = "\"" + sub_dict
-            # print(sub_dict)
+
     return d
 
 
 def json_parser(str_obj):
     list_data = []
-    # deep = 0
-    # comma = False
     substr = ""
-    # key = ""
-    # value = ""
     k = 0
     index = 0
     d = {}
