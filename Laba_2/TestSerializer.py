@@ -1,15 +1,15 @@
 import unittest
 from TestData.TestData import value_int, value_str, simple_dict, foo, Car, f, set_obj
-from Serializer.Serializer import Serializer
 from JsonSerializer.JsonSerializer import JsonSerializer
+from DictSerializer.DictSerializer import DictSerializer
 import json
 import re
 
 
 def serialize_and_deserialize_obj(obj):
-    serialized_object = Serializer.serialize(obj)
-    deserialized_object = Serializer.deserialize(serialized_object)
-    return deserialized_object
+    json_object = JsonSerializer.dumps(obj)
+    object = JsonSerializer.loads(json_object)
+    return object
 
 
 class TestSerializer(unittest.TestCase):
@@ -46,29 +46,30 @@ class TestSerializer(unittest.TestCase):
         func = serialize_and_deserialize_obj(f)
         self.assertEqual(func(1, 2), f(1, 2))
 
-    def test_json_serializer(self):
+    def test_json_parser(self):
         base_objs = [value_int, value_str, simple_dict, set_obj]
         for obj in base_objs:
             json_obj = JsonSerializer.dumps(obj)
-            self.assertEqual(re.sub(r"'", "\"", str(json_obj)), json.dumps(json_obj))
-            JsonSerializer.loads(json_obj)
+
+            self.assertEqual(json_obj, json.dumps(DictSerializer.serialize(obj)))
+            DictSerializer.deserialize(DictSerializer.serialize(obj))
 
         json_obj = JsonSerializer.dumps(foo)
-        self.assertEqual(re.sub(r"'", "\"", str(json_obj)), json.dumps(json_obj))
-        JsonSerializer.loads(json_obj)
+        self.assertEqual(json_obj, json.dumps(DictSerializer.serialize(foo)))
+        DictSerializer.deserialize(DictSerializer.serialize(foo))
 
         json_obj = JsonSerializer.dumps(Car)
-        self.assertEqual(re.sub(r"'", "\"", str(json_obj)), json.dumps(json_obj))
-        JsonSerializer.loads(json_obj)
+        self.assertEqual(json_obj, json.dumps(DictSerializer.serialize(Car)))
+        DictSerializer.deserialize(DictSerializer.serialize(Car))
 
         json_obj = JsonSerializer.dumps(f)
-        self.assertEqual(re.sub(r"'", "\"", str(json_obj)), json.dumps(json_obj))
-        JsonSerializer.loads(json_obj)
+        self.assertEqual(json_obj, json.dumps(DictSerializer.serialize(f)))
+        DictSerializer.deserialize(DictSerializer.serialize(f))
 
         audi_origin = Car(120, "audi", 1500)
         json_obj = JsonSerializer.dumps(audi_origin)
-        self.assertEqual(re.sub(r"'", "\"", str(json_obj)), json.dumps(json_obj))
-        JsonSerializer.loads(json_obj)
+        self.assertEqual(json_obj, json.dumps(DictSerializer.serialize(audi_origin)))
+        DictSerializer.deserialize(DictSerializer.serialize(audi_origin))
 
 
 test_obj = TestSerializer()
@@ -77,4 +78,4 @@ test_obj.test_butoma()
 test_obj.test_class()
 test_obj.test_instance()
 test_obj.test_function()
-test_obj.test_json_serializer()
+test_obj.test_json_parser()

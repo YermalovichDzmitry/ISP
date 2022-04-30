@@ -11,7 +11,7 @@ class DictSerializer:
         body = {}
         if obj_type == int:
             body["type"] = "int"
-            body["value"] = obj
+            body["value"] = str(obj)
 
         elif obj_type == str:
             body["type"] = "str"
@@ -19,7 +19,7 @@ class DictSerializer:
 
         elif obj_type == float:
             body["type"] = "float"
-            body["value"] = obj
+            body["value"] = str(obj)
 
         elif obj_type == bool:
             body["type"] = "bool"

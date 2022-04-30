@@ -14,5 +14,3 @@ def change_format(cur_format, need_format, filename):
 
     des_obj = builder_serializer_cur.load(filename)
     builder_serializer_need.dump(des_obj, filename)
-    if cur_format == "json":
-        os.remove(filename + file_arg)
