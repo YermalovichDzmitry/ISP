@@ -1,12 +1,21 @@
-from django.shortcuts import render, redirect
-from .models import Articles
-from .forms import ArticleForm
-from django.views.generic import DetailView, UpdateView, DeleteView
+from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponse
+from django.shortcuts import render, redirect, reverse
+from .models import Articles, Category
+from .forms import ArticleForm, RegisterUserForm
+from django.views.generic import DetailView, UpdateView, DeleteView, CreateView
+from django.urls import reverse_lazy
 
 
 def news_home(request):
-    news = Articles.objects.order_by('-date')
-    return render(request, 'news/news_home.html', {'news': news})
+    news = Articles.objects.all()
+    cats = Category.objects.all()
+    data = {
+        'news': news,
+        "cats": cats,
+        "name_category": "Все категории"
+    }
+    return render(request, 'news/news_home.html', data)
 
 
 class NewsUpdateView(UpdateView):
@@ -42,3 +51,25 @@ def create(request):
         'error': error
     }
     return render(request, 'news/create.html', data)
+
+
+def show_category(request, cat_id):
+    news = Articles.objects.filter(cat_id=cat_id)
+    cats = Category.objects.all()
+    data = {
+        'news': news,
+        "cats": cats,
+        "name_category": "Все категории"
+    }
+    return render(request, 'news/news_home.html', data)
+
+
+def login(request):
+    return HttpResponse("Авторизация")
+
+
+class RegisterUser(CreateView):
+    form_class = RegisterUserForm
+    template_name = 'news/register.html'
+    success_url = reverse_lazy("login")
+

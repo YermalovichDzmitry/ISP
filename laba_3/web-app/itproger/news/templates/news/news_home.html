@@ -7,8 +7,9 @@
         <h1>Новости на сайте</h1>
         {% for el in news %}
         <div class="alter alter-warning">
+            <p>Категория: {{el.cat}}</p>
+            <p>Дата: {{el.date|date:"d-m-Y H:i:s"}}</p>
             <h3>{{el.title}}</h3>
-            <p>{{el.anons}}</p>
             <a href="{% url 'news-detail' el.id %}" class="btn btn-warning">Читать детальнее</a>
         </div>
         {% endfor %}

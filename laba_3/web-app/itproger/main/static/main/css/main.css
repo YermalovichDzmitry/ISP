@@ -1,3 +1,16 @@
+* {
+font-family: arial;
+}
+
+* a{
+    text-decoration: none;
+    color: #fff;
+}
+
+.regi,.ent{
+    float:right;
+}
+
 body{
     background: #2c2c2c;
 }
@@ -5,15 +18,17 @@ aside {
     float:left,
     background: #181818;
     width: 15%;
-    padding: 2.5%;
+    padding: 50px;
     height: 100vh;
     color: #fff;
     border-right: 5px solid #4d4d4d;
 }
 
 aside img{
-    width: 80px;
+    width: 130px;
+    height: 150px;
     float: left;
+    padding:10px;
 }
 
 aside .logo{
@@ -24,17 +39,18 @@ aside .logo{
     top:-5px;
 }
 aside h3{
-    margin-top: 50px;
-    font-size: 28ps;
+    margin-top: 30px;
+    font-size: 10ps;
 }
-aside ul {list-style: none}
+aside ul {list-style: none;}
 
 aside ul li{
     color: #fff;
     display: block;
     margin-top: 20px;
-    transition: transform .6s ease;
+    transition: transform .7s ease;
 }
+
 
 aside ul li:hover, aside ul a:hover{
     color: #eb5959;
@@ -46,8 +62,10 @@ main .features{
     color: #fff;
     margin-top: 100px;
     text-align: center;
-    width:90%;
+    width:80%;
 }
+
+
 
 main .features h1 {font-size: 50px;}
 main .features p {max-width: 400px; margin: 20px auto}
