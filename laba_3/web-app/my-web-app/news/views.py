@@ -1,8 +1,10 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import logout
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.views import LoginView
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, reverse
 from .models import Articles, Category
-from .forms import ArticleForm, RegisterUserForm
+from .forms import ArticleForm, RegisterUserForm, LoginUserForm
 from django.views.generic import DetailView, UpdateView, DeleteView, CreateView
 from django.urls import reverse_lazy
 
@@ -64,8 +66,8 @@ def show_category(request, cat_id):
     return render(request, 'news/news_home.html', data)
 
 
-def login(request):
-    return HttpResponse("Авторизация")
+# def login(request):
+#     return HttpResponse("Авторизация")
 
 
 class RegisterUser(CreateView):
@@ -73,3 +75,15 @@ class RegisterUser(CreateView):
     template_name = 'news/register.html'
     success_url = reverse_lazy("login")
 
+
+class LoginUser(LoginView):
+    form_class = LoginUserForm
+    template_name = 'news/login.html'
+
+    def get_success_url(self):
+        return reverse_lazy('home')
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')
