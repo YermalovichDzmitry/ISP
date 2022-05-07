@@ -31,10 +31,10 @@ class Author(models.Model):
 
 
 class Articles(models.Model):
-    title = models.CharField('Название', max_length=50)
+    title = models.CharField('Название', max_length=250)
     anons = models.CharField('Аннонс', max_length=250)
     full_text = models.TextField('Статья')
-    date = models.DateTimeField('Дата публикации')
+    date = models.DateTimeField('Дата публикации', blank=True, null=True)
     cat = models.ForeignKey('Category',
                             on_delete=models.PROTECT,
                             null=True)  # Мы запретили удалять категории на котрые установленны ссылки в article

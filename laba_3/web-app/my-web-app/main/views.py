@@ -1,10 +1,12 @@
 from django.shortcuts import render
 import logging
 
+logger = logging.getLogger('main')
+
 
 # Create your views here.
 def index(request):
-    logging.info("index")
+    logger.info("index")
     data = {
         'title': 'Главная страница',
     }
@@ -12,5 +14,5 @@ def index(request):
 
 
 def about(request):
-    logging.info("about")
+    logger.info("about")
     return render(request, 'main/about.html')

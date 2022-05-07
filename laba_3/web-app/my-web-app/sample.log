@@ -1,5 +1,4 @@
-INFO:root:NewsUpdateView
-INFO:root:NewsDeleteView
-INFO:root:NewDetailView
-INFO:root:RegisterUser
-INFO:root:LoginUser
+INFO:main:index
+INFO:main:about
+INFO:main:index
+INFO:main:about
