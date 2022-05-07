@@ -30,6 +30,7 @@
             <a href="{% url 'home' %}"><li>Главная</li></a>
             <a href="{% url 'about' %}"><li>Про нас</li></a>
             <a href="{% url 'news_home' %}"><li>Новости</li></a>
+            <a href="{% url 'authors_name' %}"><li>Авторы</li></a>
 
             <p><br><b>{{name_category}}</b></p>
             <ul>
@@ -41,7 +42,6 @@
                 {% endif %}
             {% endfor %}
             </ul>
-
             <a href="{% url 'create' %}"><li><button class="btn btn-info"><i class="fas fa-plus-circle"></i>Добавить</button></li></a>
         </ul>
     </aside>

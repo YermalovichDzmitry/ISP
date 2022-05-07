@@ -10,8 +10,21 @@
             <p>Категория: {{el.cat}}</p>
             <p>Дата: {{el.date|date:"d-m-Y H:i:s"}}</p>
             <h3>{{el.title}}</h3>
+            <p>Авторы:</p>
+            <ul>
+            {% for author in el.authors.all %}
+                <li>{{author}}</li>
+            {% endfor %}
+            </ul>
             <a href="{% url 'news-detail' el.id %}" class="btn btn-warning">Читать детальнее</a>
         </div>
         {% endfor %}
+
+<!--        {% for el in authors %}-->
+<!--            <p>{{el.name}}</p>-->
+<!--            <p>{{el.gender}}</p>-->
+<!--            <p>{{el.address}}</p>-->
+<!--        {% endfor %}-->
+
     </div>
 {% endblock %}

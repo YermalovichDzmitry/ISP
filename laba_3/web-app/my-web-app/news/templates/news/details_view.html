@@ -8,6 +8,12 @@
         <p>{{ article.date }}</p>
         <p>{{ article.full_text }}</p>
         <p>Категория: {{ article.cat }}</p>
+        <p>Авторы:</p>
+        <ul>
+            {% for author in article.authors.all %}
+                <li>{{author}}</li>
+            {% endfor %}
+        </ul>
         <a href="{% url 'news-delete' article.id %}" class="btn btn-danger">Удаить</a>
         <a href="{% url 'news-update' article.id %}" class="btn btn-info">Редактировать</a>
     </div>

@@ -11,4 +11,7 @@ urlpatterns = [
     path('register/', views.RegisterUser.as_view(), name="register"),
     path('login/', views.LoginUser.as_view(), name='login'),
     path('logout/', views.logout_user, name='logout'),
+
+    path('authors_name/', views.authors_name, name='authors_name'),
+    path('authors_name/<int:authors_id>', views.show_authors, name='authors_detail'),
 ]

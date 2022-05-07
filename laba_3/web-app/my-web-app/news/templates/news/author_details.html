@@ -1,0 +1,27 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Авторы{% endblock %}
+
+{% block content %}
+    <div class="features">
+            {% for author in authors.all %}
+                <h1>{{author.name}}</h1>
+                <br>
+                <h3>Гендер : {{author.gender}}</h3>
+                <br>
+                <h3>Адрес : {{author.address}}</h3>
+                <br>
+            <h3>Статьи:</h3>
+            <br>
+            <ul>
+                {% for article in author.articles_set.all %}
+                    <li>{{ article }}</li>
+                    <br>
+                {% endfor %}
+            </ul>
+                <br>
+                <br>
+
+            {% endfor %}
+    </div>
+{% endblock %}
