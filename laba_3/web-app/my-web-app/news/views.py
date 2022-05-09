@@ -9,7 +9,6 @@ from django.views.generic import DetailView, UpdateView, DeleteView, CreateView
 from django.urls import reverse_lazy
 import logging
 
-# logging.basicConfig(filename="sample.log", level=logging.INFO, filemode="w")
 logger = logging.getLogger('main')
 
 
