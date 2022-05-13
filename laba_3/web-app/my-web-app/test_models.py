@@ -23,8 +23,3 @@ class AuthorModelTest(TestCase):
         author = Author.objects.get(id=1)
         field_label = author._meta.get_field('gender').verbose_name
         self.assertEquals(field_label, 'gender')
-    #
-    # def test_get_absolute_url(self):
-    #     author = Author.objects.get(id=1)
-    #     print(author.get_absolute_url())
-    #     # self.assertEquals(author.get_absolute_url(), '/news/authors_name/1')

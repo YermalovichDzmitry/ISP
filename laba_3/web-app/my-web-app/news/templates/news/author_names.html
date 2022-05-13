@@ -4,13 +4,15 @@
 
 {% block content %}
     <div class="features">
-        <h1>Авторы</h1>
-        <ul>
+
+        <h1 class="main_author">Авторы</h1>
+        <ul class="author_name_page">
             {% for author in authors.all %}
-                <a href="{% url 'authors_detail' author.id %}"><li>{{author}}</li></a>
+                <a href="{% url 'authors_detail' author.id %}" class="author_name_page_a"><li class="author_name_page_li">{{author}}</li></a>
                 <br>
                 <br>
             {% endfor %}
         </ul>
+
     </div>
 {% endblock %}

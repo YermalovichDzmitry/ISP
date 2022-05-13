@@ -10,14 +10,53 @@ font-family: arial;
 .regi, .ent, .last{
     float:right;
 }
+main .main_page{
+    float: right;
+    color: #fff;
+    margin-top: 100px;
+    text-align: center;
+    width:80%;
+}
 
 .user_class_name{
     color:white;
     float:right;
+    width: 30%;
+    display: block;
+    padding-left:230px;
 }
+
+.last{
+width: 20%;
+margin-left:30px;
+padding-right:100px;
+}
+
 body{
     background: #2c2c2c;
 }
+
+.main_author{
+padding-bottom:40px;
+
+}
+
+.author_name_page {list-style: none;}
+
+.author_name_page_li{
+    color: #fff;
+    display: block;
+    margin-top: 20px;
+    transition: transform .7s ease;
+}
+
+
+.author_name_page_li:hover, .author_name_page_a:hover{
+    color: #eb5959;
+    text-decoration: none;
+    transform: scale(1.05);
+}
+
 aside {
     float:left,
     background: #181818;

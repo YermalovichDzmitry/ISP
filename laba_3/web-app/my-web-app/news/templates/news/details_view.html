@@ -9,7 +9,7 @@
         <p>{{ article.full_text }}</p>
         <p>Категория: {{ article.cat }}</p>
         <p>Авторы:</p>
-        <ul>
+        <ul class="author_name_page">
             {% for author in article.authors.all %}
                 <li>{{author}}</li>
             {% endfor %}
