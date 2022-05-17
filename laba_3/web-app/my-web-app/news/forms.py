@@ -1,5 +1,5 @@
 from .models import Articles
-from django.forms import ModelForm, TextInput, DateTimeInput, Textarea
+from django.forms import ModelForm, TextInput, DateTimeInput, Textarea, Select
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 class ArticleForm(ModelForm):
     class Meta:
         model = Articles
-        fields = ['title', 'anons', 'full_text', 'date']
+        fields = ['title', 'anons', 'full_text', 'date', 'cat', 'authors']
 
         widgets = {
             "title": TextInput(attrs={
@@ -26,6 +26,14 @@ class ArticleForm(ModelForm):
             "full_text": Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': 'Текст статьи'
+            }),
+            "cat": Select(attrs={
+                'class': 'form-control',
+                'placeholder': 'Категория'
+            }),
+            "authors": Select(attrs={
+                'class': 'form-control',
+                'placeholder': 'Автор'
             })
         }
 

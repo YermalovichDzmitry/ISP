@@ -14,7 +14,10 @@
                 <li>{{author}}</li>
             {% endfor %}
         </ul>
+        {% if user.is_superuser %}
         <a href="{% url 'news-delete' article.id %}" class="btn btn-danger">Удаить</a>
+
         <a href="{% url 'news-update' article.id %}" class="btn btn-info">Редактировать</a>
+        {% endif %}
     </div>
 {% endblock %}

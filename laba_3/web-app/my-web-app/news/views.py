@@ -12,27 +12,6 @@ import logging
 logger = logging.getLogger('main')
 
 
-def authors_name(request):
-    logger.info("authors_name")
-    authors = Author.objects.all()
-    data = {
-        "authors": authors
-    }
-    return render(request, 'news/author_names.html', data)
-
-
-def news_home(request):
-    logger.info("news_home")
-    news = Articles.objects.all()
-    cats = Category.objects.all()
-    data = {
-        'news': news,
-        "cats": cats,
-        "name_category": "Все категории",
-    }
-    return render(request, 'news/news_home.html', data)
-
-
 class NewsUpdateView(UpdateView):
     logger.info("NewsUpdateView")
     model = Articles  # Модель
@@ -52,6 +31,22 @@ class NewDetailView(DetailView):
     model = Articles  # Модель
     template_name = 'news/details_view.html'  # Шаблон
     context_object_name = 'article'  # С помощью чего передаём данные
+
+
+class RegisterUser(CreateView):
+    logger.info("RegisterUser")
+    form_class = RegisterUserForm
+    template_name = 'news/register.html'
+    success_url = reverse_lazy("login")
+
+
+class LoginUser(LoginView):
+    logger.info("LoginUser")
+    form_class = LoginUserForm
+    template_name = 'news/login.html'
+
+    def get_success_url(self):
+        return reverse_lazy('home')
 
 
 def create(request):
@@ -93,23 +88,28 @@ def show_authors(request, authors_id):
     return render(request, 'news/author_details.html', data)
 
 
-class RegisterUser(CreateView):
-    logger.info("RegisterUser")
-    form_class = RegisterUserForm
-    template_name = 'news/register.html'
-    success_url = reverse_lazy("login")
-
-
-class LoginUser(LoginView):
-    logger.info("LoginUser")
-    form_class = LoginUserForm
-    template_name = 'news/login.html'
-
-    def get_success_url(self):
-        return reverse_lazy('home')
-
-
 def logout_user(request):
     logger.info("logout_user")
     logout(request)
     return redirect('login')
+
+
+def authors_name(request):
+    logger.info("authors_name")
+    authors = Author.objects.all()
+    data = {
+        "authors": authors
+    }
+    return render(request, 'news/author_names.html', data)
+
+
+def news_home(request):
+    logger.info("news_home")
+    news = Articles.objects.all()
+    cats = Category.objects.all()
+    data = {
+        'news': news,
+        "cats": cats,
+        "name_category": "Все категории",
+    }
+    return render(request, 'news/news_home.html', data)
