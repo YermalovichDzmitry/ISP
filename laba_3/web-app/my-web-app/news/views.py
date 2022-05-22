@@ -70,7 +70,7 @@ class LoginUser(LoginView):
 
 class Create(View):
     def get(self, request):
-        logger.info("create")
+        logger.info("Create")
         error = ''
         form = ArticleForm()
         data = {
@@ -80,7 +80,7 @@ class Create(View):
         return render(request, 'news/create.html', data)
 
     def post(self, request):
-        logger.info("create")
+        logger.info("Create")
         error = ''
         form = ArticleForm(request.POST)  # Данные полученные от пользователя из формы
         if form.is_valid():
@@ -111,7 +111,7 @@ class Create(View):
 
 class ShowCategory(View):
     def get(self, request, cat_id):
-        logger.info("show_category")
+        logger.info("ShowCategory")
         news = Articles.objects.filter(cat_id=cat_id)
         cats = Category.objects.all()
         data = {
@@ -133,7 +133,7 @@ class ShowCategory(View):
 
 class ShowAuthors(View):
     def get(self, request, authors_id):
-        logger.info("show_authors")
+        logger.info("ShowAuthors")
 
         authors = Author.objects.filter(id=authors_id)
         data = {
@@ -150,7 +150,7 @@ class ShowAuthors(View):
 
 class LogoutUser(View):
     def get(self, request):
-        logger.info("logout_user")
+        logger.info("LogoutUser")
         logout(request)
         return redirect('login')
 
@@ -167,7 +167,7 @@ class LogoutUser(View):
 
 class AuthorsName(View):
     def get(self, request):
-        logger.info("authors_name")
+        logger.info("AuthorsName")
         authors = Author.objects.all()
         data = {
             "authors": authors
@@ -189,7 +189,7 @@ class AuthorsName(View):
 
 class NewsHome(View):
     def get(self, request):
-        logger.info("news_home")
+        logger.info("NewsHome")
         news = Articles.objects.all()
         cats = Category.objects.all()
         data = {
