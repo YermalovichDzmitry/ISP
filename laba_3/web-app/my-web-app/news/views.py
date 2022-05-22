@@ -8,6 +8,7 @@ from .forms import ArticleForm, RegisterUserForm, LoginUserForm
 from django.views.generic import DetailView, UpdateView, DeleteView, CreateView
 from django.urls import reverse_lazy
 import logging
+from django.views import View
 
 logger = logging.getLogger('main')
 
@@ -49,67 +50,151 @@ class LoginUser(LoginView):
         return reverse_lazy('home')
 
 
-def create(request):
-    logger.info("create")
-    error = ''
-    if request.method == "POST":  # То есть пользователь нажал на кнопку добавить статью
+# def create(request):
+#     logger.info("create")
+#     error = ''
+#     if request.method == "POST":  # То есть пользователь нажал на кнопку добавить статью
+#         form = ArticleForm(request.POST)  # Данные полученные от пользователя из формы
+#         if form.is_valid():
+#             form.save()
+#             return redirect('home')
+#         else:
+#             error = "Форма была не верной"
+#     form = ArticleForm()
+#     data = {
+#         'form': form,
+#         'error': error
+#     }
+#     return render(request, 'news/create.html', data)
+
+
+class Create(View):
+    def get(self, request):
+        logger.info("create")
+        error = ''
+        form = ArticleForm()
+        data = {
+            'form': form,
+            'error': error
+        }
+        return render(request, 'news/create.html', data)
+
+    def post(self, request):
+        logger.info("create")
+        error = ''
         form = ArticleForm(request.POST)  # Данные полученные от пользователя из формы
         if form.is_valid():
             form.save()
             return redirect('home')
         else:
             error = "Форма была не верной"
-    form = ArticleForm()
-    data = {
-        'form': form,
-        'error': error
-    }
-    return render(request, 'news/create.html', data)
+
+        form = ArticleForm()
+        data = {
+            'form': form,
+            'error': error
+        }
+        return render(request, 'news/create.html', data)
 
 
-def show_category(request, cat_id):
-    logger.info("show_category")
-    news = Articles.objects.filter(cat_id=cat_id)
-    cats = Category.objects.all()
-    data = {
-        'news': news,
-        "cats": cats,
-        "name_category": "Все категории"
-    }
-    return render(request, 'news/news_home.html', data)
+# def show_category(request, cat_id):
+#     logger.info("show_category")
+#     news = Articles.objects.filter(cat_id=cat_id)
+#     cats = Category.objects.all()
+#     data = {
+#         'news': news,
+#         "cats": cats,
+#         "name_category": "Все категории"
+#     }
+#     return render(request, 'news/news_home.html', data)
 
 
-def show_authors(request, authors_id):
-    logger.info("show_authors")
-    authors = Author.objects.filter(id=authors_id)
-    data = {
-        "authors": authors
-    }
-    return render(request, 'news/author_details.html', data)
+class ShowCategory(View):
+    def get(self, request, cat_id):
+        logger.info("show_category")
+        news = Articles.objects.filter(cat_id=cat_id)
+        cats = Category.objects.all()
+        data = {
+            'news': news,
+            "cats": cats,
+            "name_category": "Все категории"
+        }
+        return render(request, 'news/news_home.html', data)
 
 
-def logout_user(request):
-    logger.info("logout_user")
-    logout(request)
-    return redirect('login')
+# def show_authors(request, authors_id):
+#     logger.info("show_authors")
+#     authors = Author.objects.filter(id=authors_id)
+#     data = {
+#         "authors": authors
+#     }
+#     return render(request, 'news/author_details.html', data)
 
 
-def authors_name(request):
-    logger.info("authors_name")
-    authors = Author.objects.all()
-    data = {
-        "authors": authors
-    }
-    return render(request, 'news/author_names.html', data)
+class ShowAuthors(View):
+    def get(self, request, authors_id):
+        logger.info("show_authors")
+
+        authors = Author.objects.filter(id=authors_id)
+        data = {
+            "authors": authors
+        }
+        return render(request, 'news/author_details.html', data)
 
 
-def news_home(request):
-    logger.info("news_home")
-    news = Articles.objects.all()
-    cats = Category.objects.all()
-    data = {
-        'news': news,
-        "cats": cats,
-        "name_category": "Все категории",
-    }
-    return render(request, 'news/news_home.html', data)
+# def logout_user(request):
+#     logger.info("logout_user")
+#     logout(request)
+#     return redirect('login')
+
+
+class LogoutUser(View):
+    def get(self, request):
+        logger.info("logout_user")
+        logout(request)
+        return redirect('login')
+
+
+#
+# def authors_name(request):
+#     logger.info("authors_name")
+#     authors = Author.objects.all()
+#     data = {
+#         "authors": authors
+#     }
+#     return render(request, 'news/author_names.html', data)
+
+
+class AuthorsName(View):
+    def get(self, request):
+        logger.info("authors_name")
+        authors = Author.objects.all()
+        data = {
+            "authors": authors
+        }
+        return render(request, 'news/author_names.html', data)
+
+
+# def news_home(request):
+#     logger.info("news_home")
+#     news = Articles.objects.all()
+#     cats = Category.objects.all()
+#     data = {
+#         'news': news,
+#         "cats": cats,
+#         "name_category": "Все категории",
+#     }
+#     return render(request, 'news/news_home.html', data)
+
+
+class NewsHome(View):
+    def get(self, request):
+        logger.info("news_home")
+        news = Articles.objects.all()
+        cats = Category.objects.all()
+        data = {
+            'news': news,
+            "cats": cats,
+            "name_category": "Все категории",
+        }
+        return render(request, 'news/news_home.html', data)

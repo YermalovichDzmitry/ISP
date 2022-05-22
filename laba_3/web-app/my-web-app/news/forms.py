@@ -19,13 +19,14 @@ class ArticleForm(ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Анонс статьи'
             }),
-            "date": DateTimeInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Дата публикации'
-            }),
+
             "full_text": Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': 'Текст статьи'
+            }),
+            "date": DateTimeInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Дата публикации'
             }),
             "cat": Select(attrs={
                 'class': 'form-control',
