@@ -1,5 +1,5 @@
 from .models import Articles
-from django.forms import ModelForm, TextInput, DateTimeInput, Textarea, Select
+from django.forms import ModelForm, TextInput, DateTimeInput, Textarea, Select, SelectMultiple
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
@@ -32,7 +32,7 @@ class ArticleForm(ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Категория'
             }),
-            "authors": Select(attrs={
+            "authors": SelectMultiple(attrs={
                 'class': 'form-control',
                 'placeholder': 'Автор'
             })

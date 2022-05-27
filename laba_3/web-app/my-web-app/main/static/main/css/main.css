@@ -18,12 +18,16 @@ main .main_page{
     width:80%;
 }
 
+.color_create_data{
+    color: red;
+}
+
 .user_class_name{
     color:white;
     float:right;
     width: 30%;
     display: block;
-    padding-left:230px;
+    padding-left:380px;
 }
 
 .last{
@@ -58,7 +62,7 @@ padding-bottom:40px;
 }
 
 aside {
-    float:left,
+    float:left;
     background: #181818;
     width: 15%;
     padding: 50px;

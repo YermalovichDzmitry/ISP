@@ -12,8 +12,12 @@
             {{ form.anons }}<br>
             {{ form.full_text }}<br>
             {{ form.date }}<br>
+            {% if error == "Неверно введена дата и время" %}
+            <p class ="color_create_data">Неверно заполнено дата и время</p>
+            {% endif %}
             {{ form.cat }}<br>
             {{ form.authors }}<br>
+
             <button class="btn btn-success" type="submit">Добавить статью</button>
             <span><br>{{ error }}<br></span>
         </form>
