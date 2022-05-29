@@ -20,12 +20,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'django-insecure-hlxnr!39(4f%jdkuot+g%8rf=%w5590a82&+m!t(0@t9cntkb@'
-#SECRET_KEY=os.environ.get('SECRET_KEY')
-SECRET_KEY='c2d7a3bef49dd724ff103ba7113664ca507f2f50c7502b95'
+# SECRET_KEY=os.environ.get('SECRET_KEY')
+SECRET_KEY = 'c2d7a3bef49dd724ff103ba7113664ca507f2f50c7502b95'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = ['ermolovichwebapp.herokuapp.com']
+# DEBUG = (os.environ.get("DEBUG_VALUE") == 'True')
+# ALLOWED_HOSTS = ['ermolovichwebapp.herokuapp.com']
+ALLOWED_HOSTS = ['0.0.0.0:8000', 'ermolovichwebapp.herokuapp.com']
 
 # Application definition
 
@@ -108,14 +109,27 @@ WSGI_APPLICATION = 'my-web-app.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+# DEFAULT
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'laba3_db',
+#         'USER': 'postgres',
+#         'PASSWORD': '12345',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+# COMPOSE
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'laba3_db',
-        'USER': 'postgres',
-        'PASSWORD': '12345',
-        'HOST': 'localhost',
-        'PORT': '5433',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_NAME'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': os.environ.get('POSTGRES_HOST'),
+        'PORT': 5432,
     }
 }
 # Password validation
